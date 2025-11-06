@@ -1,25 +1,20 @@
-import logo from './logo.svg';
-import './App.css';
+// test/src/App.js
+import { useEffect, useState } from "react";
 
-function App() {
+export default function App() {
+  const [msg, setMsg] = useState("Loading...");
+
+  useEffect(() => {
+    fetch("/api/hello")
+      .then(res => res.json())
+      .then(data => setMsg(data.message))
+      .catch(() => setMsg("Backend 연결 실패"));
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div style={{ textAlign: "center", marginTop: "100px" }}>
+      <h1>Hello React + Node + MySQL</h1>
+      <p>{msg}</p>
     </div>
   );
 }
-
-export default App;
